@@ -1,19 +1,25 @@
 package com.example.jetpackcompose
 
 import android.annotation.SuppressLint
+import android.util.Log
+import android.view.Window
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CornerSize
@@ -22,6 +28,7 @@ import androidx.compose.material.BottomSheetState
 import androidx.compose.material.BottomSheetValue
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetLayout
+import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -36,7 +43,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TextField
 import androidx.compose.material.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -44,8 +50,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -53,7 +61,7 @@ import androidx.navigation.NavHostController
 import com.example.jetpackcompose.ui.theme.Palette1
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 @Composable
 fun StartScreenB(
     navController: NavHostController,
@@ -115,8 +123,31 @@ fun StartScreenB(
 //    StandardBottomSheetM3(innerPadding,)
 
 //      BottomSheetScreen()
+    var direction by remember { mutableStateOf(-1)}
+    val bottomSheetState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
 
-    BottomSheetScreenAnother()
+
+    Box(
+        modifier = Modifier
+            .pointerInput(Unit) {
+                detectDragGestures { change, dragAmount ->
+                    change.consume()
+                    val (x, y) = dragAmount
+                    when {
+                        y > 0 -> {
+                            direction = 2
+                        }
+
+                        y < 0 -> {
+                            direction = 3
+                        }
+                    }
+                }
+
+            }
+    ) {
+        BottomSheetScreenAnother(direction, bottomSheetState,innerPadding)
+    }
 
 }
 
@@ -239,14 +270,16 @@ fun BottomSheetScreen() {
 }
 
 @Composable
-fun BottomSheetContent(peekHeight: Dp) {
+fun BottomSheetContent(peekHeight: Dp,innerPadding: PaddingValues) {
     val scrollState = rememberScrollState()
+    var text by remember { mutableStateOf(TextFieldValue("")) }
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxWidth()
-            .heightIn(min = peekHeight, max = 300.dp) // Peek height applied here
-            .padding(16.dp)
+            // Peek height applied here
+            .navigationBarsPadding()
+            .windowInsetsPadding(WindowInsets.ime),
     ) {
         Image(
             painter = painterResource(id = R.drawable.baseline_arrow_drop_down_24),
@@ -285,6 +318,36 @@ fun BottomSheetContent(peekHeight: Dp) {
             Spacer(modifier = Modifier.height(16.dp))
             Text(text = "Item 2")
             Spacer(modifier = Modifier.height(16.dp))
+            TextField(
+                value = text,
+                onValueChange = { newText ->
+                    text = newText
+                }
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            TextField(
+                value = text,
+                onValueChange = { newText ->
+                    text = newText
+                }
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            TextField(
+                value = text,
+                onValueChange = { newText ->
+                    text = newText
+                }
+            )
+
+            Button(onClick = {
+            },
+                modifier = Modifier
+                    .padding()
+                    .padding(innerPadding)) {
+                Text(text = "Click to collapse sheet")
+            }
+
+
 
             // Add more views as needed
         }
@@ -294,20 +357,26 @@ fun BottomSheetContent(peekHeight: Dp) {
 @SuppressLint("CoroutineCreationDuringComposition")
 @OptIn(ExperimentalMaterialApi::class, ExperimentalMaterial3Api::class)
 @Composable
-fun BottomSheetScreenAnother() {
-    val bottomSheetState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
+fun BottomSheetScreenAnother(
+    direction: Int,
+    bottomSheetState: ModalBottomSheetState,
+    innerPadding: PaddingValues
+) {
+    Log.d("Drag Gesture", "value of direction = $direction")
+    Log.d("Drag Gesture", "value of bottomSheetState = ${bottomSheetState}")
     val scope = rememberCoroutineScope()
     val configuration = LocalConfiguration.current
-    val screenHeight = configuration.screenHeightDp.dp
-    val peekHeight = screenHeight / 2
+    val screenHeight = configuration.screenHeightDp.dp + configuration.screenWidthDp.dp
+    val peekHeight = configuration.screenHeightDp.dp//screenHeight / 2
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
         bottomSheetState = BottomSheetState(BottomSheetValue.Collapsed)
     )
+    val insets = WindowInsets.ime.asPaddingValues()
 
     ModalBottomSheetLayout(
         sheetState = bottomSheetState,
         sheetContent = {
-            BottomSheetContent(peekHeight)
+            BottomSheetContent(peekHeight,insets)
         },
         sheetShape = MaterialTheme.shapes.large.copy(
             topStart = CornerSize(16.dp),
@@ -318,7 +387,8 @@ fun BottomSheetScreenAnother() {
     ) {
         // Main content of the activity
         scope.launch {
-            bottomSheetState.show()
+            if(direction == 3){ bottomSheetState.show()}
+            else {bottomSheetState.hide()}
         }
         Box(
             modifier = Modifier
