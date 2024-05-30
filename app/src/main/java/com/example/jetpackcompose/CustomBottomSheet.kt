@@ -107,7 +107,7 @@ fun SamBottomSheet(){
                             Color.Transparent
                     )
                     .clickable {
-                        if(bottomSheetState.bottomSheetState.isExpanded){
+                        if (bottomSheetState.bottomSheetState.isExpanded) {
                             scope.launch {
                                 bottomSheetState.bottomSheetState.collapse()
                             }
@@ -151,79 +151,13 @@ fun samBottomContent() {
                 .padding(10.dp)
         ) {
             // Multiple Views inside Bottom Sheet
-            Text(text = "Item 1")
+            Amenities()
             Spacer(modifier = Modifier.height(16.dp))
-            Text(text = "Item 2")
+            Amenities2()
             Spacer(modifier = Modifier.height(16.dp))
-            Text(text = "Item 1")
+            Amenities3()
             Spacer(modifier = Modifier.height(16.dp))
-            Text(text = "Item 2")
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(text = "Item 1")
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(text = "Item 2")
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(text = "Item 1")
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(text = "Item 2")
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(text = "Item 1")
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(text = "Item 2")
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(text = "Item 1")
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(text = "Item 2")
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(text = "Item 2")
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(text = "Item 1")
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(text = "Item 2")
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(text = "Item 1")
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(text = "Item 2")
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(text = "Item 1")
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(text = "Item 2")
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(text = "Item 1")
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(text = "Item 2")
-            Spacer(modifier = Modifier.height(16.dp))
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(text = "Item 2")
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(text = "Item 1")
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(text = "Item 2")
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(text = "Item 1")
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(text = "Item 2")
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(text = "Item 1")
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(text = "Item 2")
-            Spacer(modifier = Modifier.height(16.dp))
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(text = "Item 2")
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(text = "Item 1")
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(text = "Item 2")
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(text = "Item 1")
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(text = "Item 2")
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(text = "Item 1")
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(text = "Item 2")
-            Spacer(modifier = Modifier.height(16.dp))
-
+            Amenities4()
             // Add more views as needed
         }
     }
@@ -253,6 +187,54 @@ fun SheetExpanded(
             .background(Color.White)
     ) {
         content()
+    }
+}
+
+@Composable
+fun Amenities() {
+    Box(
+        modifier = Modifier
+            .height(60.dp)
+            .background(Color.LightGray),
+        contentAlignment = Alignment.Center,
+    ) {
+        Text("hello")
+    }
+}
+
+@Composable
+fun Amenities2(){
+    Box(
+        modifier = Modifier
+            .height(60.dp)
+            .background(Color.Cyan),
+        contentAlignment = Alignment.Center,
+    ) {
+        Text("hello")
+    }
+}
+
+@Composable
+fun Amenities3(){
+    Box(
+        modifier = Modifier
+            .height(60.dp)
+            .background(Color.Green),
+        contentAlignment = Alignment.Center,
+    ) {
+        Text("hello")
+    }
+}
+
+@Composable
+fun Amenities4(){
+    Box(
+        modifier = Modifier
+            .height(60.dp)
+            .background(Color.Magenta),
+        contentAlignment = Alignment.Center,
+    ) {
+        Text("hello")
     }
 }
 

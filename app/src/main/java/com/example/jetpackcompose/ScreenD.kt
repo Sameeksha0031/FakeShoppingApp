@@ -4,8 +4,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.Text
 import androidx.compose.material3.Button
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,7 +20,7 @@ fun StartScreenD(navController: NavHostController) {
             .background(Palette4),
         Alignment.Center) {
         Column {
-            Text(text = "ScreenD")
+            /*Text(text = "ScreenD") //For to Pop the Screen from back Stack
             Button(onClick = {
                 navController.navigate(BottomNavItem.Home.title){
                     launchSingleTop = true
@@ -28,7 +28,8 @@ fun StartScreenD(navController: NavHostController) {
                 }
             }) {
                 Text(text = "on Click")
-            }
+            }*/
+            LazyColumnVisibilityExample()
         }
     }
 }
