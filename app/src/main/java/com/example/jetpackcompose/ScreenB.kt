@@ -68,35 +68,7 @@ import kotlinx.coroutines.launch
 fun StartScreenB(
     navController: NavHostController,
     innerPadding: PaddingValues) {
-//    var direction by remember { mutableStateOf(-1)}
-   val bottomSheetState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
-
-    /*Box(
-        modifier = Modifier
-            .pointerInput(Unit) {
-                detectDragGestures { change, dragAmount ->
-                    change.consume()
-                    val (x, y) = dragAmount
-                    when {
-                        y > 0 -> {
-                            direction = 2
-                        }
-
-                        y < 0 -> {
-                            direction = 3
-                        }
-                    }
-                }
-
-            }
-    ) {
-
-    }*/
     SamBottomSheet()
-
-    //SameeBottomSheet()
-
-
 }
 
 @Preview
