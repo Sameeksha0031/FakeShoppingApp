@@ -1,59 +1,52 @@
 package com.example.jetpackcompose
 
 import android.annotation.SuppressLint
-import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.BottomSheetScaffold
 import androidx.compose.material.BottomSheetValue
+import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.FloatingActionButton
-import androidx.compose.material.ListItem
-import androidx.compose.material.ModalBottomSheetLayout
-import androidx.compose.material.ModalBottomSheetValue
-import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.rememberBottomSheetScaffoldState
 import androidx.compose.material.rememberBottomSheetState
-import androidx.compose.material.rememberModalBottomSheetState
-import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.jetpackcompose.ui.theme.BottomSheetColor
+import com.example.jetpackcompose.ui.theme.FlexboxColor
 import kotlinx.coroutines.launch
 
+@Preview
 @SuppressLint("UnrememberedMutableState")
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -74,7 +67,7 @@ fun SamBottomSheet(){
         }
     }
 
-    val radius = (30 * bottomSheetState.currentFraction).dp
+    val radius = (20 * bottomSheetState.currentFraction).dp
 
     BottomSheetScaffold(
         sheetContent = {
@@ -113,20 +106,14 @@ fun SamBottomSheet(){
                             }
                         }
                     }
-            ) {
-                Text(
-                    "Main Content",
-                    modifier = Modifier.align(Alignment.Center),
-                    fontSize = 20.sp
-                )
-            }
+            ) {}
         },
         modifier = Modifier.navigationBarsPadding()
     )
 
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@Preview
 @Composable
 fun samBottomContent() {
     val scrollState = rememberScrollState()
@@ -137,29 +124,13 @@ fun samBottomContent() {
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxWidth() // Peek height applied here
-            .padding(16.dp)
+            .background(BottomSheetColor)
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.baseline_arrow_drop_down_24),
-            contentDescription = "",
-        )
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                // Adjust max height as needed
-                .verticalScroll(scrollState)
-                .padding(10.dp)
-        ) {
-            // Multiple Views inside Bottom Sheet
-            Amenities()
-            Spacer(modifier = Modifier.height(16.dp))
-            Amenities2()
-            Spacer(modifier = Modifier.height(16.dp))
-            Amenities3()
-            Spacer(modifier = Modifier.height(16.dp))
-            Amenities4()
-            // Add more views as needed
+        BottomSheetHeader()
+        Box(modifier = Modifier.padding(10.dp)){
+            LazyColumnVisibilityExample()
         }
+
     }
 }
 
@@ -190,51 +161,103 @@ fun SheetExpanded(
     }
 }
 
+@Preview
 @Composable
-fun Amenities() {
-    Box(
-        modifier = Modifier
-            .height(60.dp)
-            .background(Color.LightGray),
-        contentAlignment = Alignment.Center,
-    ) {
-        Text("hello")
+fun BottomSheetHeader(){
+    Box{
+        Column(
+            Modifier
+                .background(FlexboxColor)
+                .fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally) {
+            Image(painter = painterResource(id = R.drawable.baseline_arrow_drop_down_24), contentDescription = "",
+                colorFilter = ColorFilter.tint(Color.White))
+            Spacer(Modifier.height(8.dp))
+            Row(
+                Modifier
+                    .fillMaxWidth()
+                    .padding(5.dp)) {
+                Text("helmbmvbnmlo",color = Color.White,textAlign = TextAlign.Start,modifier = Modifier.weight(2F))
+                RatingTicket()
+            }
+            Row(
+                Modifier
+                    .fillMaxWidth()
+                    .padding(5.dp)) {
+                Text("helmbmvbnmlo",color = Color.White,textAlign = TextAlign.Start,modifier = Modifier.weight(2F))
+                Text("helmbmvbnmlo",color = Color.White,textAlign = TextAlign.End,
+                    modifier = Modifier
+                        .weight(1F)
+                        .padding()
+                        .padding(0.dp, 0.dp, 3.dp, 0.dp),
+                    fontSize = 8.sp)
+            }
+            Spacer(Modifier.height(8.dp))
+            Row(
+                Modifier
+                    .fillMaxWidth()
+                    .padding(5.dp), horizontalArrangement = Arrangement.SpaceBetween) {
+                Column(modifier = Modifier) {
+                    ServicesAndPolicy()
+                }
+                Column(modifier = Modifier) {
+                    ServicesAndPolicy()
+                }
+                Column(modifier = Modifier) {
+                    ServicesAndPolicy()
+                }
+                Column(modifier = Modifier) {
+                    ServicesAndPolicy()
+                }
+            }
+            Spacer(Modifier.height(8.dp))
+            Spacer(modifier = Modifier
+                .fillMaxWidth()
+                .height(0.5.dp)
+                .background(Color.White))
+            Spacer(Modifier.height(8.dp))
+        }
     }
 }
 
+@Preview
 @Composable
-fun Amenities2(){
-    Box(
+fun RatingTicket(){
+    Card(backgroundColor = Color.Green,
         modifier = Modifier
-            .height(60.dp)
-            .background(Color.Cyan),
-        contentAlignment = Alignment.Center,
+            .size(35.dp, 15.dp)
+            .padding()
+            .padding(0.dp, 0.dp, 3.dp, 0.dp),
+        shape = RoundedCornerShape(2.dp)
     ) {
-        Text("hello")
+        Row(
+            Modifier
+                .fillMaxWidth()
+                .padding(0.dp, 0.dp, 3.dp, 0.dp)) {
+            Image(painter = painterResource(id = R.drawable.baseline_arrow_drop_down_24), contentDescription = "",
+                colorFilter = ColorFilter.tint(Color.White))
+            Text("4.3", fontSize = 9.sp,color = Color.White,textAlign = TextAlign.Center,modifier = Modifier
+                .weight(1F)
+                .padding(0.dp, 3.dp))
+
+        }
     }
 }
 
+
 @Composable
-fun Amenities3(){
-    Box(
-        modifier = Modifier
-            .height(60.dp)
-            .background(Color.Green),
-        contentAlignment = Alignment.Center,
-    ) {
-        Text("hello")
+fun ServicesAndPolicy() {
+    Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.size(65.dp,45.dp)) {
+        Image(painter = painterResource(id = R.drawable.baseline_arrow_drop_down_24), contentDescription = "",
+            colorFilter = ColorFilter.tint(Color.White))
+        Text("dsfkghjtfu", fontSize = 14.sp,color = Color.White,textAlign = TextAlign.Center,modifier = Modifier
+            .fillMaxSize()
+            .padding(0.dp, 3.dp, 0.dp, 0.dp))
     }
 }
 
-@Composable
-fun Amenities4(){
-    Box(
-        modifier = Modifier
-            .height(60.dp)
-            .background(Color.Magenta),
-        contentAlignment = Alignment.Center,
-    ) {
-        Text("hello")
-    }
-}
+
+
+
+
 

@@ -14,3 +14,6 @@ val Palette1 = Color(0xFFACE1AF)
 val Palette2 = Color(0xFFB0EBB4)
 val Palette3 = Color(0xFFBFF6C3)
 val Palette4 = Color(0xFFE0FBE2)
+val FlexboxColor = Color(0xFF0E0101)
+val BottomSheetColor = Color(0xFF181717)
+
