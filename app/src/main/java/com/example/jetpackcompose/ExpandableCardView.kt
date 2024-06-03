@@ -48,9 +48,7 @@ fun ExpandableCardView() {
         mutableStateOf(false)
     }
    Box(modifier = Modifier
-       .fillMaxWidth()
-       .wrapContentHeight()
-       .nestedScroll(rememberNestedScrollInteropConnection())) {
+       .fillMaxWidth()) {
        Card(shape = RoundedCornerShape(4.dp), border = BorderStroke(1.dp, Color.White)) {
            Column(modifier = Modifier.navigationBarsPadding()) {
                Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier

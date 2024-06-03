@@ -214,7 +214,11 @@ fun LayoutForAmenities() {
                 }
             }
         }
-        Spacer(modifier = Modifier.fillMaxWidth().padding(7.dp,15.dp,7.dp,15.dp).height(0.5.dp).background(Color.White))
+        Spacer(modifier = Modifier
+            .fillMaxWidth()
+            .padding(7.dp, 15.dp, 7.dp, 15.dp)
+            .height(0.5.dp)
+            .background(Color.White))
     }
 }
 
