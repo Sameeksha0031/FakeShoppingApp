@@ -29,7 +29,8 @@ fun StartScreenD(navController: NavHostController) {
             }) {
                 Text(text = "on Click")
             }*/
-            LazyColumnVisibilityExample()
+            //LazyColumnVisibilityExample()
+            ExpandableCardView()
         }
     }
 }

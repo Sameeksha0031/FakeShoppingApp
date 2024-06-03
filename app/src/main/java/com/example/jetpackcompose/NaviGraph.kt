@@ -29,7 +29,7 @@ fun NavGraphComposable(
         }
         
         composable(BottomNavItem.Analytics.title) {
-            checkBottomBarVisibility(true)
+            checkBottomBarVisibility(false)
             StartScreenD(navController = navController)
         }
     }
